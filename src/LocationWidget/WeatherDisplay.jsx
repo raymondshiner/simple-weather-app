@@ -39,8 +39,9 @@ const WeatherDisplayWrapper = styled(Column)`
   align-items: flex-start;
   padding: 10px;
   border-radius: 15px;
-  margin-top: 15px;
-  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: max-content;
 `
 
 const Name = styled.h4`

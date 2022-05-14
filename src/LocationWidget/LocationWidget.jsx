@@ -24,12 +24,12 @@ const LocationWidget = () => {
       break
     default:
       mainContent = locations.map((location, index) => (
-        <div key={location.name}>
+        <React.Fragment key={location.name}>
           <WeatherDisplay location={location} />
           {index === 0 && (
-            <div>Here are some places close to {location.name}</div>
+            <Divider>Here are some places close to {location.name}</Divider>
           )}
-        </div>
+        </React.Fragment>
       ))
   }
 
@@ -54,12 +54,13 @@ const SearchBar = styled.input`
 
   width: 70%;
   min-width: 180px;
-  max-width: 400px;
+  max-width: 350px;
 `
 
 const WeatherDisplayWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
 
   font-size: larger;
@@ -67,8 +68,14 @@ const WeatherDisplayWrapper = styled.div`
 
   margin: 3rem;
   border: 0.3rem dotted aqua;
-  padding: 1rem;
+  padding: 0 1rem;
 
-  width: 80vw;
+  width: fit-content;
   max-width: 1200px;
+`
+
+const Divider = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid white;
 `
