@@ -16,6 +16,7 @@ const AppWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10px;
   width: 100%;
   height: 100%;
   text-align: center;
@@ -23,4 +24,5 @@ const AppWrapper = styled.div`
 
 const Title = styled.h1`
   color: aqua;
+  margin-bottom: 3rem;
 `
