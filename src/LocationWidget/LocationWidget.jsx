@@ -11,8 +11,6 @@ const queryErrorPrompt = "We're unable to find that location, please try again!"
 const LocationWidget = () => {
   const { locations, fetchWeatherInformation } = useWeatherInformation()
 
-  console.log("locations", locations)
-
   let mainContent
 
   switch (locations) {
