@@ -1,64 +1,45 @@
-import debounce from "lodash.debounce"
 import React from "react"
 import styled from "styled-components"
-import {
-  getAdjacentLatLonQueryValues,
-  getQueryURL,
-  parseWeatherInformation,
-} from "./utils"
+import useWeatherInformation from "./useWeatherInformation"
+import WeatherDisplay from "./WeatherDisplay"
 
-const enterAddressPrompt =
+const enterQueryPrompt =
   "Enter a city name above to see the weather for that location!"
 
+const queryErrorPrompt = "We're unable to find that location, please try again!"
+
 const LocationWidget = () => {
-  const [result, setResult] = React.useState("")
+  const { locations, fetchWeatherInformation } = useWeatherInformation()
 
-  const fetchWeatherInformation = debounce(async (event) => {
-    const cityName = event.target.value
-    console.log("ran")
+  console.log("locations", locations)
 
-    if (cityName.trim() !== "") {
-      const mainResult = await fetch(getQueryURL(cityName))
-        .then((response) => response.json())
-        .then((data) => data)
+  let mainContent
 
-      if (mainResult.success === false) {
-        setResult("error")
-        return
-      }
-
-      const closeLatLonValues = getAdjacentLatLonQueryValues(
-        mainResult.location.lat,
-        mainResult.location.lon
-      )
-
-      const closeResultA = await fetch(getQueryURL(closeLatLonValues.queryA))
-        .then((response) => response.json())
-        .then((data) => data)
-
-      const closeResultB = await fetch(getQueryURL(closeLatLonValues.queryB))
-        .then((response) => response.json())
-        .then((data) => data)
-
-      setResult({
-        main: parseWeatherInformation(mainResult),
-        closeA: parseWeatherInformation(closeResultA),
-        closeB: parseWeatherInformation(closeResultB),
-      })
-    } else {
-      setResult("")
-    }
-  }, 500)
+  switch (locations) {
+    case "empty":
+      mainContent = enterQueryPrompt
+      break
+    case "error":
+      mainContent = queryErrorPrompt
+      break
+    default:
+      mainContent = locations.map((location, index) => (
+        <div key={location.name}>
+          <WeatherDisplay location={location} />
+          {index === 0 && (
+            <div>Here are some places close to {location.name}</div>
+          )}
+        </div>
+      ))
+  }
 
   return (
     <>
       <SearchBar
         placeholder="Enter a Location"
-        onChange={fetchWeatherInformation}
+        onChange={(e) => fetchWeatherInformation(e.target.value)}
       />
-      <WeatherDisplay>
-        {!!result ? "Something" : enterAddressPrompt}
-      </WeatherDisplay>
+      <WeatherDisplayWrapper>{mainContent}</WeatherDisplayWrapper>
     </>
   )
 }
@@ -76,7 +57,7 @@ const SearchBar = styled.input`
   max-width: 400px;
 `
 
-const WeatherDisplay = styled.div`
+const WeatherDisplayWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -88,8 +69,6 @@ const WeatherDisplay = styled.div`
   border: 0.3rem dotted aqua;
   padding: 1rem;
 
-  height: 60vh;
   width: 80vw;
-  max-width: 800px;
-  max-height: 800px;
+  max-width: 1200px;
 `
