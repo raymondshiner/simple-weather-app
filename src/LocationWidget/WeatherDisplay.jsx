@@ -4,15 +4,19 @@ import styled from "styled-components"
 const WeatherDisplay = ({ location }) => {
   return (
     <WeatherDisplayWrapper>
-      <Name>{location.name}</Name>
+      <Name>{location?.name}</Name>
       <FlexBox>
-        <img src={location.icon} alt="weather icon" />
+        <img
+          src={location?.icon}
+          alt="weather-icon"
+          data-testid="weather-icon"
+        />
         <Column>
-          <Text>{location.description}</Text>
-          <Text>{location.temp}°C</Text>
-          <Text>Wind: {location.windSpeed} km/h</Text>
-          <Text>Humidity: {location.humidity}%</Text>
-          <Text>Precip: {location.precip}%</Text>
+          <Text>{location?.description}</Text>
+          <Text>{location?.temp}°C</Text>
+          <Text>Wind: {location?.windSpeed} km/h</Text>
+          <Text>Humidity: {location?.humidity}%</Text>
+          <Text>Precip: {location?.precip}%</Text>
         </Column>
       </FlexBox>
     </WeatherDisplayWrapper>
