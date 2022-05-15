@@ -9,38 +9,42 @@ const useWeatherInformation = () => {
     if (query.trim() !== "") {
       setIsLoading(true)
 
-      const mainResult = await fetch(getQueryURL(query))
-        .then((response) => response.json())
-        .then((data) => data)
+      try {
+        const mainResult = await fetch(getQueryURL(query))
+          .then((response) => response.json())
+          .then((data) => data)
 
-      if (mainResult.success === false) {
-        setIsLoading(false)
+        if (mainResult.success === false) {
+          setIsLoading(false)
+          setResult("error")
+          return
+        }
+
+        const closeLatLonValues = getAdjacentLatLonQueryValues(
+          mainResult.location.lat,
+          mainResult.location.lon
+        )
+
+        const closeResultA = await fetch(getQueryURL(closeLatLonValues.queryA))
+          .then((response) => response.json())
+          .then((data) => data)
+
+        const closeResultB = await fetch(getQueryURL(closeLatLonValues.queryB))
+          .then((response) => response.json())
+          .then((data) => data)
+
+        setResult([
+          parseWeatherInformation(mainResult),
+          parseWeatherInformation(closeResultA),
+          parseWeatherInformation(closeResultB),
+        ])
+      } catch (error) {
         setResult("error")
-        return
       }
-
-      const closeLatLonValues = getAdjacentLatLonQueryValues(
-        mainResult.location.lat,
-        mainResult.location.lon
-      )
-
-      const closeResultA = await fetch(getQueryURL(closeLatLonValues.queryA))
-        .then((response) => response.json())
-        .then((data) => data)
-
-      const closeResultB = await fetch(getQueryURL(closeLatLonValues.queryB))
-        .then((response) => response.json())
-        .then((data) => data)
-
-      setResult([
-        parseWeatherInformation(mainResult),
-        parseWeatherInformation(closeResultA),
-        parseWeatherInformation(closeResultB),
-      ])
 
       setIsLoading(false)
     } else {
-      setResult("empty")
+      setResult("error")
     }
   }, 500)
 
