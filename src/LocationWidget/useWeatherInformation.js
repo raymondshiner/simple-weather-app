@@ -3,14 +3,18 @@ import { useState } from "react"
 
 const useWeatherInformation = () => {
   const [locations, setResult] = useState("empty")
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchWeatherInformation = debounce(async (query) => {
     if (query.trim() !== "") {
+      setIsLoading(true)
+
       const mainResult = await fetch(getQueryURL(query))
         .then((response) => response.json())
         .then((data) => data)
 
       if (mainResult.success === false) {
+        setIsLoading(false)
         setResult("error")
         return
       }
@@ -33,12 +37,14 @@ const useWeatherInformation = () => {
         parseWeatherInformation(closeResultA),
         parseWeatherInformation(closeResultB),
       ])
+
+      setIsLoading(false)
     } else {
       setResult("empty")
     }
   }, 500)
 
-  return { locations, fetchWeatherInformation }
+  return { locations, fetchWeatherInformation, isLoading }
 }
 
 export default useWeatherInformation

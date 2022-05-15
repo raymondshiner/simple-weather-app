@@ -9,7 +9,8 @@ const enterQueryPrompt =
 const queryErrorPrompt = "We're unable to find that location, please try again!"
 
 const LocationWidget = () => {
-  const { locations, fetchWeatherInformation } = useWeatherInformation()
+  const { locations, fetchWeatherInformation, isLoading } =
+    useWeatherInformation()
 
   let mainContent
 
@@ -37,6 +38,7 @@ const LocationWidget = () => {
         placeholder="Enter a Location"
         onChange={(e) => fetchWeatherInformation(e.target.value)}
       />
+      {isLoading && <Divider>Loading some results...</Divider>}
       <WeatherDisplayWrapper>{mainContent}</WeatherDisplayWrapper>
     </>
   )
@@ -76,4 +78,5 @@ const Divider = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid white;
+  max-width: 300px;
 `
