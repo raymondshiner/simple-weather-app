@@ -22,6 +22,8 @@ You may also see any lint errors in the console.
 
 Launches the headless jest test runner in the interactive watch mode.
 
+Note: The current testing implentation is making network requests to the same API that the live version of the application uses. There is currently no api mocking, because of this if you run the tests alot you may run out of allowed api calls based on my access key for weatherstack api (it only allows 250 api calls per month per account). Read section 3 for more information on this and how to fix it if you encounter problems.
+
 ## 3. Modifying the API Access Key
 
 This application uses the weatherstack.com API which on the free subscription plan only allows 250/requests a month. I am currently using an access key for a dummy account i have created for this specific applications purposes. But if you are getting continual error messages in the application then it is likely that the API is out of monthly calls (you can verify this by checking the network response in the dev tools when you type something into the search bar). To update the API key to use your own account so you will be under the monthly limit, simply replace the environment variable REACT_APP_API_KEY value found in the .env file in the project with your own API Key found on weatherstack.com.
