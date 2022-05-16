@@ -4,9 +4,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Note: I did not optionally dockerize the application.
 
+## 0. Installing dependencies
+
+Before running the application or its tests you need to install the node dependencies. You can do so by running the following command.
+
+### `npm install`
+
 ## 1. Building/Running the application
 
-In the project directory, you can run:
+In the project directory, you can run the following command to start the application.
 
 ### `npm start`
 
