@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Geode IP Weather Application
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## 1. Building/Running the application
 
 In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This Runs the app in the development mode.
+Open [http://localhost:8080](http://localhost:8080) to view it in your browser.
 
-The page will reload when you make changes.\
+The page will reload when you make changes to the source code.
 You may also see any lint errors in the console.
+
+## 2. Running the Tests of the Application
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the headless jest test runner in the interactive watch mode.
 
-### `npm run build`
+## 3. Improving the application
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This application, although fairly clean, is missing quite a bit before i would consider it production ready. Below is a small list of points that i would want to Improve before shipping this product.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Testing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  - The most glaring whole in this project in my mind is the slightly lackluster testing implementation. Although the tests that are written are fairly robust, they imply an equally robust mocking solution that i did not have time to implement for this example. The tests themselves are also incomplete. useWeatherInformation, for example, was not tested for this example as I didn't have that much time, in a production scenario this would be fully tested, which also might inform some of the architecture decisions about the code. It would likely be re factored when you go to test it fully, as this hook wasn't really designed with testability in mind, just core functionality. There are many other small optimizations that can be made within testing. Adding cypress tests for better user imitation, making sure that we are using test-ids as little as possible as they break the user/developer initiation testing paradigm (ask me more about that if curious!), etc. Once again, all of this was simply avoided for lack of time.
 
-### `npm run eject`
+- API and Data Fetching
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  - My solution for fetching 3 data sets from weatherstack api is intentionally basic as to avoid obfuscation. I tried to make the logic streamlined, simple, and easy to follow. This resulted in some basic package choices (fetch api as opposed to something a bit more robust) and simple error handling (manual loading state, error handling via try/catch, etc.). These solutions are basic, and effective, but not great. Similar to my testing point above, I would want to reapproach this logic and implement a more robust library such as React Query or Axios for the fetching/loading state logic, in addition with some better refactoring to make testing the individual pieces of functionality better and easier to follow. This simply requires more time and effort than i had time to spend this weekend. That being said, i stand by the solution I have presented, as i think it is simple, easy to follow, and fully functional.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Design
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  - SImply put, I am nt a designer. And this design that i have presented for the application was not great. Even though i designed it mobile first, The focus of my assignment was the core functionality, so the design was intentionally low profile. I would want to spend more time on this design implementing core design principles such as Keeping elements above the fold, or maybe adding some sort of an optional button to 'see nearby locations', so the user isn't peppered with information they aren't interested in. The whole UI also just needs what i refer to as a "gloss update". Where the core components should be made to simply look nicer (UI updates as opposed to UX upgrades mentioned before). A very simple way to do this would be to use something like Material UI as a start to make things look homogenous. This version of the application was intentionally made using only styled-components to keep the focus on the logic of the application, and to make as much of the styling/css code that is rendered on the screen easily identifiable/changeable in the source code.
