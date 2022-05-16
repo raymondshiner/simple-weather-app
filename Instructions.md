@@ -28,7 +28,7 @@ This application uses the weatherstack.com API which on the free subscription pl
 
 ## 4. Improving the application
 
-This application, although fairly clean, is missing quite a bit before i would consider it production ready. Below is a small list of points that i would want to Improve before shipping this product.
+This application, although fairly clean, is missing quite a bit before i would consider it production ready. Below is a small list of points that i would want to Improve before shipping this product. I'm sure there are more opitmizations that can and should be made, these are just the ones that came to mind.
 
 - Testing
 
