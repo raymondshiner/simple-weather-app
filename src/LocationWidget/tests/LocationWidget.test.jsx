@@ -41,4 +41,19 @@ describe("LocationWidget", () => {
     await screen.findByText(/We're unable to find that location/i)
     expect(screen.queryByText(/loading some results.../i)).toBeNull()
   })
+
+  it("should render 3 metadata weather widgets and derender the loading prompt if a vaild city is put into the searchbar", async () => {
+    render(<LocationWidget />)
+
+    expect(screen.queryByText(/loading some results.../i)).toBeNull()
+    expect(screen.queryByText(/We're unable to find that location/i)).toBeNull()
+    userEvent.type(screen.getByRole("textbox"), "New York")
+
+    //loading prompt renders
+    await screen.findByText(/loading some results.../i)
+
+    //3 results (each containing wind text) should render and loading prompt de-renders
+    expect(await screen.findAllByText(/Wind/i)).toHaveLength(3)
+    expect(screen.queryByText(/loading some results.../i)).toBeNull()
+  })
 })
