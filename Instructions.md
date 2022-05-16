@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Note: I did not optionally dockerize the application.
+
 ## 1. Building/Running the application
 
 In the project directory, you can run:
